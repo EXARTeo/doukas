@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DOUKAS Apartments — Σύβοτα</title>
+  <meta name="description" content="DOUKAS Apartments στα Σύβοτα — δύο άνετα διαμερίσματα για ξεκούραστες διακοπές. Κλείστε με ένα τηλεφώνημα." />
+  <meta name="theme-color" content="#0b0b0b" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Minimal, elegant font pair -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- LocalBusiness schema (optional but nice for SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": "DOUKAS Apartments",
+    "telephone": "+30 6976878433",
+    "url": "",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Σύβοτα",
+      "addressRegion": "Θεσπρωτία",
+      "addressCountry": "GR"
+    },
+    "sameAs": [],
+    "priceRange": "$$"
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- NAV (text-only, blends with background via mix-blend-mode) -->
+<header class="nav" id="nav">
+  <div class="nav__inner container">
+    <nav class="nav__group nav__group--left" aria-label="Πλοήγηση αριστερά">
+      <a href="#apartments">Διαμερίσματα</a>
+      <a href="#amenities">Παροχές</a>
+    </nav>
+
+    <a class="nav__brand" href="#top" aria-label="DOUKAS">DOUKAS</a>
+
+    <div class="nav__right">
+      <nav class="nav__group nav__group--right" aria-label="Πλοήγηση δεξιά">
+        <a href="#location">Τοποθεσία</a>
+        <a href="#contact">Επικοινωνία</a>
+      </nav>
+
+      <button class="nav__toggle" id="navToggle" type="button" aria-label="Άνοιγμα μενού" aria-expanded="false" aria-controls="mobileNav">
+        MENU
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu (letters only) -->
+  <div class="nav__mobile" id="mobileNav" hidden>
+    <a href="#apartments">Διαμερίσματα</a>
+    <a href="#amenities">Παροχές</a>
+    <a href="#location">Τοποθεσία</a>
+    <a href="#contact">Επικοινωνία</a>
+  </div>
+</header>
+
+  <!-- HERO -->
+  <main id="top">
+    <section class="hero" data-nav-theme="light">
+      <div class="hero__bg" role="img" aria-label="Φωτογραφία από τα DOUKAS Apartments"></div>
+      <div class="hero__overlay"></div>
+
+      <div class="container hero__content">
+        <p class="kicker reveal">Σύβοτα • Ιόνιο</p>
+        <h1 class="title reveal">DOUKAS Apartments</h1>
+        <p class="lead reveal">
+          Δύο άνετα διαμερίσματα για ήσυχες διακοπές — κλείστε εύκολα με ένα τηλεφώνημα.
+        </p>
+
+        <div class="hero__actions reveal">
+          <a class="btn btn--solid" href="#apartments">Δείτε τα διαμερίσματα</a>
+          <a class="btn btn--ghost" href="tel:+306976878433">Κλήση για κράτηση</a>
+        </div>
+
+        <div class="hero__meta reveal">
+          <span>☎ 697 687 8433</span>
+          <span>•</span>
+          <a href="https://maps.app.goo.gl/PEQWPL52uwh16XWh8" target="_blank" rel="noopener">Άνοιγμα στο Google Maps</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- APARTMENTS -->
+    <section class="section" id="apartments" data-nav-theme="dark">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2>Τα διαμερίσματα</h2>
+          <p>Δύο ξεχωριστοί χώροι, ίδιο “DOUKAS” vibe: καθαρό, φωτεινό, πρακτικό.</p>
+        </div>
+
+        <div class="cards">
+          <!-- Apartment 1 -->
+          <article class="card reveal">
+            <div class="card__media">
+              <img src="assets/apt1/01.jpg" alt="DOUKAS 1 — φωτογραφία 1" loading="lazy" />
+            </div>
+
+            <div class="card__body">
+              <div class="card__top">
+                <h3>DOUKAS 1</h3>
+                <p class="muted">Ιδανικό για ζευγάρια ή μικρές παρέες.</p>
+              </div>
+
+              <ul class="bullets">
+                <!-- άλλαξε/σβήσε ό,τι δεν ισχύει -->
+                <li>Κουζίνα με βασικό εξοπλισμό</li>
+                <li>Air condition & TV</li>
+                <li>Μπαλκόνι</li>
+              </ul>
+
+              <div class="card__actions">
+                <a class="btn btn--solid" href="tel:+306976878433">Κλήση</a>
+                <button class="btn btn--ghost js-open-gallery" data-gallery="apt1">Φωτογραφίες</button>
+              </div>
+
+              <div class="gallery" data-gallery="apt1">
+                <button class="gallery__item" data-src="assets/apt1/01.jpg" aria-label="Άνοιγμα φωτογραφίας 1">
+                  <img src="assets/apt1/01.jpg" alt="" loading="lazy">
+                </button>
+                <button class="gallery__item" data-src="assets/apt1/02.jpg" aria-label="Άνοιγμα φωτογραφίας 2">
+                  <img src="assets/apt1/02.jpg" alt="" loading="lazy">
+                </button>
+                <button class="gallery__item" data-src="assets/apt1/03.jpg" aria-label="Άνοιγμα φωτογραφίας 3">
+                  <img src="assets/apt1/03.jpg" alt="" loading="lazy">
+                </button>
+                <button class="gallery__item" data-src="assets/apt1/04.jpg" aria-label="Άνοιγμα φωτογραφίας 4">
+                  <img src="assets/apt1/04.jpg" alt="" loading="lazy">
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Apartment 2 -->
+          <article class="card reveal">
+            <div class="card__media">
+              <img src="assets/apt2/01.jpg" alt="DOUKAS 2 — φωτογραφία 1" loading="lazy" />
+            </div>
+
+            <div class="card__body">
+              <div class="card__top">
+                <h3>DOUKAS 2</h3>
+                <p class="muted">Περισσότερος χώρος, ίδιο στυλ άνεσης.</p>
+              </div>
+
+              <ul class="bullets">
+                <!-- άλλαξε/σβήσε ό,τι δεν ισχύει -->
+                <li>Κουζίνα με πλήρη εξοπλισμό</li>
+                <li>Air condition</li>
+                <li>Μπαλκόνι</li>
+              </ul>
+
+              <div class="card__actions">
+                <a class="btn btn--solid" href="tel:+306976878433">Κλήση</a>
+                <button class="btn btn--ghost js-open-gallery" data-gallery="apt2">Φωτογραφίες</button>
+              </div>
+
+              <div class="gallery" data-gallery="apt2">
+                <button class="gallery__item" data-src="assets/apt2/01.jpg" aria-label="Άνοιγμα φωτογραφίας 1">
+                  <img src="assets/apt2/01.jpg" alt="" loading="lazy">
+                </button>
+                <button class="gallery__item" data-src="assets/apt2/02.jpg" aria-label="Άνοιγμα φωτογραφίας 2">
+                  <img src="assets/apt2/02.jpg" alt="" loading="lazy">
+                </button>
+                <button class="gallery__item" data-src="assets/apt2/03.jpg" aria-label="Άνοιγμα φωτογραφίας 3">
+                  <img src="assets/apt2/03.jpg" alt="" loading="lazy">
+                </button>
+                <button class="gallery__item" data-src="assets/apt2/04.jpg" aria-label="Άνοιγμα φωτογραφίας 4">
+                  <img src="assets/apt2/04.jpg" alt="" loading="lazy">
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="note reveal">
+          <p class="muted">
+            *Κρατήσεις αποκλειστικά τηλεφωνικά: <a href="tel:+306976878433">697 687 8433</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AMENITIES -->
+    <section class="section section--alt" id="amenities" data-nav-theme="dark">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2>Παροχές</h2>
+          <p>Τα essentials για να νιώσεις “σαν σπίτι”, αλλά σε διακοπές.</p>
+        </div>
+
+        <div class="features">
+          <div class="feature reveal">
+            <h3>Κουζίνα</h3>
+            <p class="muted">Για πρωινό, καφέ, ή ένα γρήγορο γεύμα πριν την παραλία.</p>
+          </div>
+          <div class="feature reveal">
+            <h3>Κλιματισμός</h3>
+            <p class="muted">Άνεση σε κάθε ώρα της ημέρας.</p>
+          </div>
+          <div class="feature reveal">
+            <h3>Μπαλκόνι</h3>
+            <p class="muted">Αέρας, φως, χαλάρωση.</p>
+          </div>
+          <div class="feature reveal">
+            <h3>TV</h3>
+            <p class="muted">Για χαλαρές στιγμές μετά τη βόλτα.</p>
+          </div>
+        </div>
+
+        <!-- Optional short “about” line (edit freely) -->
+        <div class="about reveal">
+          <h3 class="about__title">Σύβοτα Θεσπρωτίας</h3>
+          <p class="muted">
+            Στο λιμάνι των Συβότων, κοντά στη θάλασσα — ιδανική βάση για βόλτες και παραλίες.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section class="section" id="location" data-nav-theme="dark">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2>Τοποθεσία</h2>
+          <p>Άνοιξε τον χάρτη και έλα εύκολα.</p>
+        </div>
+
+        <div class="map reveal">
+          <!-- Simple embed using a query (no API key) -->
+          <iframe
+            title="Χάρτης DOUKAS Apartments"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=DUKAS%20APARTMENTS%20Syvota%2046100&output=embed">
+          </iframe>
+
+          <div class="map__actions">
+            <a class="btn btn--solid" href="https://maps.app.goo.gl/PEQWPL52uwh16XWh8" target="_blank" rel="noopener">Άνοιγμα στο Google Maps</a>
+            <a class="btn btn--ghost" href="#contact">Επικοινωνία</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section section--alt" id="contact" data-nav-theme="dark">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2>Επικοινωνία</h2>
+          <p>Κρατήσεις μόνο τηλεφωνικά.</p>
+        </div>
+
+        <div class="contact reveal">
+          <div class="contact__card">
+            <h3>Τηλέφωνο</h3>
+            <p class="contact__big">
+              <a href="tel:+306976878433">697 687 8433</a>
+            </p>
+            <p class="muted">Πάτησε για άμεση κλήση από κινητό.</p>
+
+            <div class="contact__buttons">
+              <a class="btn btn--solid" href="tel:+306976878433">Κλήση τώρα</a>
+              <a class="btn btn--ghost" href="https://maps.app.goo.gl/PEQWPL52uwh16XWh8" target="_blank" rel="noopener">Οδηγίες</a>
+            </div>
+          </div>
+
+          <div class="contact__card contact__card--small">
+            <h3>Ώρες</h3>
+            <p class="muted">Καθημερινά</p>
+            <p class="muted">09:00 – 21:00</p>
+            <p class="muted" style="margin-top:14px;">(Άλλαξε το αν θες)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer" data-nav-theme="dark">
+      <div class="container footer__inner">
+        <p>© <span id="year"></span> DOUKAS Apartments</p>
+        <div class="footer__links">
+          <a href="#apartments">Διαμερίσματα</a>
+          <a href="#location">Τοποθεσία</a>
+          <a href="tel:+306976878433">Κλήση</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Κλείσιμο">×</button>
+    <img class="lightbox__img" id="lightboxImg" alt="Μεγέθυνση φωτογραφίας" />
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
