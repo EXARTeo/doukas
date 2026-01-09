@@ -1,80 +1,6 @@
-const nav = document.getElementById("nav");
-
 // Footer year
 const year = document.getElementById("year");
 if (year) year.textContent = new Date().getFullYear();
-
-/* ACTIVE LINK HIGHLIGHT */
-const navLinks = Array.from(document.querySelectorAll(".nav__group a, #mobileNav a"))
-  .filter(a => a.getAttribute("href")?.startsWith("#"));
-
-const linkMap = new Map(navLinks.map(a => [a.getAttribute("href"), a]));
-
-const activeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    const id = `#${entry.target.id}`;
-    const link = linkMap.get(id);
-    if (!link) return;
-
-    if (entry.isIntersecting) {
-      // Clear desktop active
-      document.querySelectorAll(".nav__group a").forEach(a => a.classList.remove("is-active"));
-      // Set active in desktop nav only (mobile is fine without underline)
-      const desktop = document.querySelector(`.nav__group a[href=\"${id}\"]`);
-      if (desktop) desktop.classList.add("is-active");
-    }
-  });
-}, { threshold: 0.45 });
-
-["apartments", "amenities", "location", "contact"].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) activeObserver.observe(el);
-});
-
-/* MOBILE MENU */
-const toggle = document.getElementById("navToggle");
-const mobileMenu = document.getElementById("mobileNav");
-
-function closeMobile(){
-  if (!toggle || !mobileMenu) return;
-  toggle.setAttribute("aria-expanded", "false");
-  toggle.textContent = "MENU";
-  mobileMenu.hidden = true;
-  document.body.style.overflow = "";
-}
-
-function openMobile(){
-  if (!toggle || !mobileMenu) return;
-  toggle.setAttribute("aria-expanded", "true");
-  toggle.textContent = "CLOSE";
-  mobileMenu.hidden = false;
-  document.body.style.overflow = "hidden";
-}
-
-if (toggle && mobileMenu) {
-  toggle.addEventListener("click", () => {
-    const expanded = toggle.getAttribute("aria-expanded") === "true";
-    expanded ? closeMobile() : openMobile();
-  });
-
-  mobileMenu.addEventListener("click", (e) => {
-    const a = e.target.closest("a");
-    if (a) return closeMobile();
-    // Click on empty overlay closes
-    if (e.target === mobileMenu) closeMobile();
-  });
-
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 980 && !mobileMenu.hidden) closeMobile();
-  });
-}
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeMobile();
-    closeLightbox();
-  }
-});
 
 /* REVEAL ON SCROLL */
 const revealEls = document.querySelectorAll(".reveal");
@@ -97,16 +23,16 @@ function openLightbox(src){
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 }
+
 function closeLightbox(){
   lightbox.classList.remove("is-open");
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImg.src = "";
-  // If mobile nav is open, keep body locked
-  const navOpen = toggle && toggle.getAttribute("aria-expanded") === "true";
-  document.body.style.overflow = navOpen ? "hidden" : "";
+  document.body.style.overflow = "";
 }
 
 if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+
 if (lightbox) {
   lightbox.addEventListener("click", (e) => {
     // Close if you click outside the image
@@ -126,7 +52,117 @@ document.querySelectorAll(".gallery__item").forEach(btn => {
 document.querySelectorAll(".js-open-gallery").forEach(btn => {
   btn.addEventListener("click", () => {
     const key = btn.getAttribute("data-gallery");
-    const gallery = document.querySelector(`.gallery[data-gallery=\"${key}\"]`);
+    const gallery = document.querySelector(`.gallery[data-gallery="${key}"]`);
     if (gallery) gallery.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 });
+
+/* ACTIVE NAV LINK (adds/removes .is-active) */
+(() => {
+  const nav = document.getElementById("nav");
+  if (!nav) return;
+
+  // Πιάνουμε links από desktop nav + (αν υπάρχει) mobile nav
+  const allLinks = [
+    ...document.querySelectorAll('#nav a[href^="#"]'),
+    ...document.querySelectorAll('#mobileNav a[href^="#"]'),
+  ];
+
+  // κρατάμε μόνο anchors τύπου #section
+  const navLinks = allLinks.filter(a => {
+    const h = a.getAttribute("href");
+    return h && h.startsWith("#") && h.length > 1;
+  });
+
+  if (!navLinks.length) return;
+
+  // Map: "#amenities" -> [<a>, <a>...] (desktop+mobile)
+  const linkMap = new Map();
+  for (const a of navLinks) {
+    const href = a.getAttribute("href");
+    if (!linkMap.has(href)) linkMap.set(href, []);
+    linkMap.get(href).push(a);
+  }
+
+  // Targets που θα παρακολουθεί ο observer
+  const hero = document.querySelector("section.hero"); // για #top (αν έχεις link #top)
+  const targets = [];
+
+  // Αν υπάρχει #top link, κάνε το hero "στόχο"
+  if (hero && linkMap.has("#top")) targets.push({ el: hero, href: "#top" });
+
+  // Για κάθε άλλο href βρες το αντίστοιχο section
+  for (const href of linkMap.keys()) {
+    if (href === "#top") continue;
+    const el = document.querySelector(href);
+    if (el) targets.push({ el, href });
+  }
+
+  let currentHref = null;
+
+  const setActive = (href) => {
+    if (!href || href === currentHref) return;
+    currentHref = href;
+
+    // καθάρισμα
+    for (const arr of linkMap.values()) {
+      arr.forEach(a => a.classList.remove("is-active"));
+    }
+
+    // ενεργοποίηση (desktop + mobile, αν υπάρχουν)
+    const activeArr = linkMap.get(href);
+    if (activeArr) activeArr.forEach(a => a.classList.add("is-active"));
+  };
+
+  // Άμεσο highlight όταν πατάς link
+  navLinks.forEach(a => {
+    a.addEventListener("click", () => setActive(a.getAttribute("href")));
+  });
+
+  let observer = null;
+
+  const setupObserver = () => {
+    const navH = nav.getBoundingClientRect().height || 0;
+
+    if (observer) observer.disconnect();
+
+    observer = new IntersectionObserver((entries) => {
+      // Πάρε το πιο “κυρίαρχο” intersecting section
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+      if (!visible.length) return;
+
+      const topEntry = visible[0];
+      const match = targets.find(t => t.el === topEntry.target);
+      if (match) setActive(match.href);
+    }, {
+      // ώστε να μην “μπερδεύεται” κάτω από sticky nav
+      rootMargin: `-${Math.round(navH + 12)}px 0px -55% 0px`,
+      threshold: [0.25, 0.45, 0.6],
+    });
+
+    targets.forEach(t => observer.observe(t.el));
+  };
+
+  setupObserver();
+
+  // Αν αλλάξει ύψος nav σε resize (mobile), ξαναστήσε observer
+  window.addEventListener("resize", setupObserver, { passive: true });
+
+  // Αρχικό active (αν φορτώσει στη μέση)
+  setTimeout(() => {
+    const navH = nav.getBoundingClientRect().height || 0;
+    const line = navH + 18;
+
+    // βρες το τελευταίο section που έχει περάσει κάτω από το nav
+    const passed = targets
+      .map(t => ({ ...t, top: t.el.getBoundingClientRect().top }))
+      .filter(x => x.top <= line)
+      .sort((a, b) => b.top - a.top)[0];
+
+    if (passed) setActive(passed.href);
+    else if (linkMap.has("#top")) setActive("#top");
+  }, 60);
+})();

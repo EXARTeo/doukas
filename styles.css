@@ -20,6 +20,7 @@
 
 *{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
+/* html, body { overflow-x: hidden; } */
 body{
   margin:0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -80,129 +81,70 @@ body{
 .btn--ghost:hover{ background: rgba(0,0,0,.03); }
 
 /* NAV */
+
 .nav{
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: var(--nav-h);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  background: transparent;
-}
-
-.nav__inner{
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 16px;
-}
-
-.nav__group{
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  min-width: 0;
-}
-.nav__group--left{ justify-content: flex-start; }
-
-.nav__right{
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 14px;
-}
-.nav__group--right{ justify-content: flex-end; }
-
-/* Blend text with whatever is behind it (inverted/negative look) */
-.nav a,
-.nav__brand,
-.nav__toggle,
-.nav__mobile a{
-  color: #fff;
-  mix-blend-mode: difference;
-}
-
-.nav__toggle{ display:none; }
-
-.nav a,
-.nav__toggle{
-  font: inherit;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  background: transparent;
-  border: 0;
-  padding: 10px 10px;
-  cursor: pointer;
-  border-radius: 999px;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.nav__brand{
-  justify-self: center;
-  text-decoration: none;
-  font-weight: 800;
-  font-size: clamp(20px, 2.3vw, 30px);
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  padding: 10px 10px;
-  border-radius: 999px;
-  line-height: 1;
-}
-
-/* Underline animation (still text-only) */
-.nav__group a{ position: relative; }
-.nav__group a::after{
-  content: "";
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 6px;
-  height: 1px;
-  background: currentColor;
-  opacity: .8;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--t);
-}
-.nav__group a:hover::after,
-.nav__group a.is-active::after{ transform: scaleX(1); }
-
-.nav a:focus-visible,
-.nav__toggle:focus-visible,
-.nav__brand:focus-visible{
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
-}
-
-/* Mobile menu overlay (letters only) */
-.nav__mobile{
-  position: fixed;
-  inset: 0;
-  z-index: 70;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-  padding: calc(var(--nav-h) + 26px) 22px 22px;
-}
-.nav__mobile[hidden]{ display: none; }
-.nav__mobile a{
   display: block;
-  font-weight: 800;
-  font-size: clamp(22px, 6vw, 34px);
-  letter-spacing: .10em;
-  text-transform: uppercase;
-  padding: 10px 16px;
+  position: sticky;
+  text-align: center;
+  mix-blend-mode: difference;
+  color: #fff;
+  z-index: 999;
+  top: 0;
+
+  -webkit-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
+  transition-property: all;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+  transition-behavior: normal;
+
+  /* Underline animation tuning */
+  --u-thick: 3px;
+  --u-dur: 170ms;
+  --u-ease: cubic-bezier(.2,.9,.2,1);
 }
 
-/* anchor offset for fixed nav */
-section[id]{ scroll-margin-top: calc(var(--nav-h) + 18px); }
+/* Nav links: πιο μεγάλα + πιο χοντρά */
+.nav a{
+  color: inherit;
+  text-decoration: none;
+
+  font-weight: 700;
+
+  font-size: clamp(20px, 1.2vw, 30px);
+  letter-spacing: 0.02em;
+
+  padding: 20px 30px;
+  display: inline-block;
+
+  /* Animated underline (slides in fast from the left) */
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% var(--u-thick);  /* start hidden */
+  background-position: 0 100%;
+  background-origin: content-box;      /* underline only under the word */
+  background-clip: content-box;
+  transition: opacity var(--t), background-size var(--u-dur) var(--u-ease);
+  will-change: background-size;
+}
+
+.nav a.is-active,
+.nav a:focus-visible{
+  background-size: 100% var(--u-thick);
+}
+
+/* Κεντρικό brand: ακόμα μεγαλύτερο */
+.nav a.nav__brand{
+  font-weight: 800;
+  font-size: clamp(30px, 2vw, 40px);
+  letter-spacing: 0.08em;
+}
+
+/* optional: μικρό hover χωρίς να χαλάει το mix-blend-mode */
+.nav a:hover{
+  opacity: 0.9;
+}
 
 
 /* HERO */
@@ -219,14 +161,14 @@ section[id]{ scroll-margin-top: calc(var(--nav-h) + 18px); }
   position:absolute;
   inset:0;
   background:
-    url("assets/hero.jpg") center/cover no-repeat;
-  filter: saturate(1.05);
+    url("assets/apt1/01.jpg") center/cover no-repeat;
+  /* filter: saturate(1.05); */
   transform: scale(1.02);
 }
 .hero__overlay{
   position:absolute;
   inset:0;
-  background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.55) 55%, rgba(0,0,0,.78));
+  /* background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.55) 55%, rgba(0,0,0,.78)); */
 }
 .hero__content{
   position:relative;
@@ -490,8 +432,6 @@ section[id]{ scroll-margin-top: calc(var(--nav-h) + 18px); }
 
 /* Responsive */
 @media (max-width: 980px){
-  .nav__group{ display:none; }
-  .nav__toggle{ display:inline-flex; align-items:center; justify-content:center; }
   .cards{ grid-template-columns: 1fr; }
   .features{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .contact{ grid-template-columns: 1fr; }
@@ -511,5 +451,45 @@ section[id]{ scroll-margin-top: calc(var(--nav-h) + 18px); }
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }
   .reveal{ transition:none; transform:none; opacity:1; }
-  .btn, .nav, .gallery__item{ transition:none; }
+  .btn, .gallery__item{ transition:none; }
+}
+
+/* Mobile layout: 4 links πάνω, DOUKAS κάτω στο κέντρο σαν divider */
+@media (max-width: 1000px){
+  .nav{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* <-- σημαντικό */
+    gap: 6px 10px;
+    padding: 10px 12px 6px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Τα 4 links στην πρώτη σειρά */
+  .nav a{
+    justify-self: center;
+    font-weight: 700;
+    font-size: clamp(12px, 3.2vw, 20px);
+    letter-spacing: 0.02em;
+    padding: 10px 6px;
+    line-height: 1.1;
+
+    min-width: 0;           /* <-- σημαντικό σε grid */
+    white-space: normal;    /* <-- βγάζουμε το nowrap */
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  /* Το DOUKAS κάτω, full width, “διαχωριστικό” */
+  .nav a.nav__brand{
+    grid-column: 1 / -1;   /* πιάνει όλο το πλάτος */
+    grid-row: 2;           /* πάει στη 2η σειρά */
+    justify-self: center;
+
+    font-weight: 800;
+    font-size: clamp(30px, 5vw, 40px);
+    letter-spacing: 0.28em;  /* η “καλή απόσταση” που ζήτησες */
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 }
