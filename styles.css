@@ -522,7 +522,7 @@ a.nav__brand{
     min-width: 0;           /* <-- σημαντικό σε grid */
     white-space: normal;    /* <-- βγάζουμε το nowrap */
     text-align: center;
-    overflow-wrap: anywhere;
+    /* overflow-wrap: anywhere; */
   }
 
   /* Το DOUKAS κάτω, full width, “διαχωριστικό” */
