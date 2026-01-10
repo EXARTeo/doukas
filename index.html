@@ -40,36 +40,25 @@
 <header class="nav" id="nav">
   <a href="#apartments">Διαμερίσματα</a>
   <a href="#amenities">Παροχές</a>
-  <a href="#top" class="nav__brand">DOUKAS</a>
+  <a href="#top" class="nav__brand nav__brand--nav">DOUKAS</a>
   <a href="#location">Τοποθεσία</a>
   <a href="#contact">Επικοινωνία</a>
 </header>
+
 
   <!-- HERO -->
   <main id="top">
     <section class="hero" data-nav-theme="light">
       <div class="hero__bg" role="img" aria-label="Φωτογραφία από τα DOUKAS Apartments"></div>
-      <div class="hero__overlay"></div>
+      <!-- <div class="hero__overlay"></div> -->
 
-      <div class="container hero__content">
-        <p class="kicker reveal">Σύβοτα • Ιόνιο</p>
-        <h1 class="title reveal">DOUKAS Apartments</h1>
-        <p class="lead reveal">
-          Δύο άνετα διαμερίσματα για ήσυχες διακοπές — κλείστε εύκολα με ένα τηλεφώνημα.
-        </p>
+      <!-- LOGO ΣΤΟ HERO -->
+      <a href="#top" class="nav__brand nav__brand--hero">DOUKAS</a>
 
-        <div class="hero__actions reveal">
-          <a class="btn btn--solid" href="#apartments">Δείτε τα διαμερίσματα</a>
-          <a class="btn btn--ghost" href="tel:+306976878433">Κλήση για κράτηση</a>
-        </div>
+      <div class="container hero__content"></div>
 
-        <div class="hero__meta reveal">
-          <span>☎ 697 687 8433</span>
-          <span>•</span>
-          <a href="https://maps.app.goo.gl/PEQWPL52uwh16XWh8" target="_blank" rel="noopener">Άνοιγμα στο Google Maps</a>
-        </div>
-      </div>
     </section>
+
 
     <!-- APARTMENTS -->
     <section class="section" id="apartments" data-nav-theme="dark">
@@ -284,5 +273,46 @@
   </div>
 
   <script src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const nav = document.querySelector('.nav');
+      const heroBrand = document.querySelector('.nav__brand--hero');
+
+      if (!nav || !heroBrand) return;
+
+      let triggerY = 0;
+
+      function recalcTrigger() {
+        const navH = nav.offsetHeight;
+
+        // absolute θέση του logo στο document (όχι στο viewport)
+        const logoDocTop = heroBrand.getBoundingClientRect().top + window.scrollY;
+
+        // Θέλουμε να γίνει "stuck" όταν το logo θα έφτανε κάτω από το sticky nav
+        triggerY = logoDocTop - navH;
+
+        update(); // για να εφαρμόσει άμεσα
+      }
+
+      function update() {
+        document.documentElement.classList.toggle('is-stuck', window.scrollY >= triggerY);
+      }
+
+      // initial
+      recalcTrigger();
+
+      // on scroll
+      window.addEventListener('scroll', update, { passive: true });
+
+      // on resize/orientation change (γιατί αλλάζει η θέση του centered logo)
+      window.addEventListener('resize', recalcTrigger);
+
+      // αν φορτώνουν fonts/εικόνες και αλλάζει layout, ξαναυπολόγισε λίγο μετά
+      window.addEventListener('load', recalcTrigger);
+    });
+  </script>
+
+
+
 </body>
 </html>

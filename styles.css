@@ -134,8 +134,21 @@ body{
   background-size: 100% var(--u-thick);
 }
 
+/* No underline for the "logo" (DOUKAS) */
+a.nav__brand{
+  background-image: none !important;
+  background-size: 0 0 !important;
+}
+
+/* extra safety if it ever becomes active */
+a.nav__brand.is-active{
+  background-image: none !important;
+  background-size: 0 0 !important;
+}
+
+
 /* Κεντρικό brand: ακόμα μεγαλύτερο */
-.nav a.nav__brand{
+a.nav__brand{
   font-weight: 800;
   font-size: clamp(30px, 2vw, 40px);
   letter-spacing: 0.08em;
@@ -147,16 +160,63 @@ body{
 }
 
 
+/* ===================== Mini efe ===================== */
+
+/* HERO brand: κέντρο */
+.nav__brand--hero{
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+
+  mix-blend-mode: difference;
+  color: #fff;
+  text-decoration: none !important;
+  
+  font-size: clamp(70px, 7vw, 80px)!important;
+  letter-spacing: 0.22em;
+  transition: opacity 180ms ease, transform 220ms ease, font-size 220ms ease, letter-spacing 220ms ease;
+}
+
+/* Nav brand: κρυφό αρχικά (θα εμφανιστεί όταν "κολλήσει") */
+.nav__brand--nav{
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+/* Όταν κάνεις scroll κάτω από το hero */
+.is-stuck .nav__brand--hero{
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -60%);
+}
+
+.is-stuck .nav__brand--nav{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+
+
+/* ===================== Mini efe ===================== */
+
+
 /* HERO */
 .hero{
   position:relative;
-  min-height: 92vh;
+  min-height: 92svh;
   display:grid;
   align-items:end;
   padding: 120px 0 56px;
   background: #000;
   color: var(--paper2);
+  overflow: hidden;
 }
+
 .hero__bg{
   position:absolute;
   inset:0;
@@ -165,30 +225,15 @@ body{
   /* filter: saturate(1.05); */
   transform: scale(1.02);
 }
-.hero__overlay{
+
+
+/* .hero__content{
+  top: 2%;
+  left: 10%;
   position:absolute;
-  inset:0;
-  /* background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.55) 55%, rgba(0,0,0,.78)); */
-}
-.hero__content{
-  position:relative;
   z-index: 1;
-}
-.hero__actions{
-  display:flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-.hero__meta{
-  display:flex;
-  gap: 10px;
-  align-items:center;
-  flex-wrap: wrap;
-  font-size: 13px;
-  opacity:.9;
-}
-.hero__meta a{ color: inherit; }
+} */
+
 
 /* SECTIONS */
 .section{
@@ -397,7 +442,7 @@ body{
   background: rgba(0,0,0,.84);
   display:none;
   place-items:center;
-  z-index: 100;
+  z-index: 1000;
   padding: 22px;
 }
 .lightbox.is-open{ display:grid; }
