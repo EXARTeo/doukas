@@ -36,6 +36,7 @@ body{
   text-transform:uppercase;
   font-size: 12px;
   opacity:.9;
+  top: 0;
 }
 .title{
   font-family: "Playfair Display", serif;
@@ -204,8 +205,7 @@ a.nav__brand{
 
 /* ===================== Mini efe ===================== */
 
-
-/* HERO */
+/* ===================== BEST HERO EVER ===================== */
 .hero{
   position:relative;
   min-height: 92svh;
@@ -217,22 +217,109 @@ a.nav__brand{
   overflow: hidden;
 }
 
-.hero__bg{
+/* HERO (2-photo grid modern vibe) */
+.hero{
+  position:relative;
+  min-height: 92svh;
+  display:grid;
+  align-items:end;
+  padding: 120px 0 56px;
+  background: #fff;
+  color: var(--paper2);
+  overflow: hidden;
+}
+
+.hero__grid{
   position:absolute;
-  inset:0;
-  background:
-    url("assets/apt1/01.jpg") center/cover no-repeat;
-  /* filter: saturate(1.05); */
-  transform: scale(1.02);
+  inset: 0;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: clamp(16px, 2.6vw, 36px);
+  gap: clamp(100px, 10vw, 130px);
+  /* gap: 100px; */
+  z-index: 0;
 }
 
 
-/* .hero__content{
-  top: 2%;
-  left: 10%;
-  position:absolute;
-  z-index: 1;
-} */
+.hero__tile{
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 30px 70px rgba(0,0,0,.55);
+  transform: translateZ(0);
+}
+
+.hero__tile img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display:block;
+  transform: scale(1.03);
+  filter: saturate(1.08) contrast(1.05);
+}
+
+/* Top-left tile */
+.hero__tile--tl{
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  justify-self: start;
+}
+
+/* Bottom-right tile */
+.hero__tile--br{
+  grid-column: 1;
+  grid-row: 2;
+  align-self: end;
+  justify-self: end;
+}
+
+/* Το hero brand να είναι πάνω από όλα */
+.nav__brand--hero{
+  z-index: 3;
+}
+
+
+/* HERO content layer */
+
+/* Top-left block */
+.hero__content{
+  position: absolute;
+  z-index: 3; 
+
+  top: clamp(16px, 2.6vw, 36px);
+  left: clamp(16px, 2.6vw, 36px);
+  max-width: min(44ch, 46vw);
+
+  display: inline-block;  /* <- shrink-to-fit στο πλάτος του title */
+  color: #111; /* επειδή εχω background #fff */
+}
+
+.hero__title{
+  margin: 0 0 8px;
+  font-size: 20px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .75;
+  white-space: nowrap;
+
+  display: inline-block;  /* <- “μετράει” σωστά το πλάτος του */
+}
+
+.hero__sub{
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .75;
+
+  max-width: 100%;        /* <- ποτέ πιο φαρδύ από το content */
+  white-space: normal;    /* <- επιτρέπει wrap */
+  overflow-wrap: break-word;
+}
+
+/* ===================== BEST HERO EVER ===================== */
 
 
 /* SECTIONS */
@@ -522,7 +609,7 @@ a.nav__brand{
     min-width: 0;           /* <-- σημαντικό σε grid */
     white-space: normal;    /* <-- βγάζουμε το nowrap */
     text-align: center;
-    /* overflow-wrap: anywhere; */
+    /* overflow-wrap: anywhere;  TODO */
   }
 
   /* Το DOUKAS κάτω, full width, “διαχωριστικό” */
