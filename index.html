@@ -9,6 +9,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+  <link rel="canonical" href="https://YOUR-DOMAIN.gr/">
+
   <!-- Minimal, elegant font pair -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -19,19 +23,24 @@
   {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
+    "@id": "https://YOUR-DOMAIN.gr/#lodging",
     "name": "DOUKAS Apartments",
-    "telephone": "+30 6976878433",
-    "url": "",
+    "url": "https://YOUR-DOMAIN.gr/",
+    "telephone": "+306976878433",
+    "image": [
+      "https://YOUR-DOMAIN.gr/assets/wp/07.jpg"
+    ],
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Σύβοτα",
       "addressRegion": "Θεσπρωτία",
       "addressCountry": "GR"
     },
-    "sameAs": [],
-    "priceRange": "$$"
+    "priceRange": "$$",
+    "hasMap": "https://maps.app.goo.gl/PEQWPL52uwh16XWh8"
   }
   </script>
+
 </head>
 
 <body>
@@ -48,7 +57,10 @@
 
   <!-- HERO -->
   <main id="top">
+    <!--  invisible hero text -->
     <section class="hero" data-nav-theme="light">
+      <h1 class="sr-only">DOUKAS Apartments — Διαμερίσματα στα Σύβοτα</h1>
+
       <div class="hero__grid" aria-hidden="true">
         <figure class="hero__tile hero__tile-t">
           <img src="assets/wp/07.jpg" alt="Doukas' first room" loading="eager" />
