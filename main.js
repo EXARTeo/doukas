@@ -13,12 +13,31 @@ const revealObserver = new IntersectionObserver((entries) => {
 revealEls.forEach(el => revealObserver.observe(el));
 
 /* LIGHTBOX */
+
+/* LIGHTBOX (prev/next + swipe + keyboard) */
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
 const lightboxClose = document.getElementById("lightboxClose");
+const lightboxPrev = document.getElementById("lightboxPrev");
+const lightboxNext = document.getElementById("lightboxNext");
 
-function openLightbox(src){
+let lbSet = [];
+let lbIndex = 0;
+
+function renderLightbox(){
+  const src = lbSet[lbIndex] || "";
   lightboxImg.src = src;
+
+  const multi = lbSet.length > 1;
+  if (lightboxPrev) lightboxPrev.style.display = multi ? "" : "none";
+  if (lightboxNext) lightboxNext.style.display = multi ? "" : "none";
+}
+
+function openLightbox(src, set = [src], index = 0){
+  lbSet = Array.isArray(set) && set.length ? set : [src];
+  lbIndex = Number.isFinite(index) ? index : 0;
+
+  renderLightbox();
   lightbox.classList.add("is-open");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -28,34 +47,84 @@ function closeLightbox(){
   lightbox.classList.remove("is-open");
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImg.src = "";
+  lbSet = [];
+  lbIndex = 0;
   document.body.style.overflow = "";
+}
+
+function stepLightbox(dir){
+  if (lbSet.length <= 1) return;
+  lbIndex = (lbIndex + dir + lbSet.length) % lbSet.length;
+  renderLightbox();
+}
+
+function openLightboxFromEl(el){
+  const src = el.getAttribute("data-src");
+  if (!src) return;
+
+  // Σετάρει “σετ” εικόνων από το κοντινότερο container (carousel ή gallery)
+  const container = el.closest('[data-carousel], [data-gallery]') || document;
+  const items = Array
+    .from(container.querySelectorAll('[data-src]'))
+    .filter(n => n.getAttribute("data-src"));
+
+  const set = items.map(n => n.getAttribute("data-src"));
+  const idx = Math.max(0, items.indexOf(el));
+
+  openLightbox(src, set, idx);
 }
 
 if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
 
+if (lightboxPrev) lightboxPrev.addEventListener("click", () => stepLightbox(-1));
+if (lightboxNext) lightboxNext.addEventListener("click", () => stepLightbox(1));
+
 if (lightbox) {
+  // Κλείσιμο αν πατήσεις έξω από την εικόνα
   lightbox.addEventListener("click", (e) => {
-    // Close if you click outside the image
     if (e.target === lightbox) closeLightbox();
   });
+
+  // Swipe (κινητό): αριστερά/δεξιά για prev/next
+  let tStartX = 0, tStartY = 0;
+
+  lightbox.addEventListener("touchstart", (e) => {
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.touches.length !== 1) return; // αφήνει pinch-zoom ή multi-touch
+    tStartX = e.touches[0].clientX;
+    tStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  lightbox.addEventListener("touchend", (e) => {
+    if (!lightbox.classList.contains("is-open")) return;
+    if (!tStartX && !tStartY) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - tStartX;
+    const dy = t.clientY - tStartY;
+
+    // μόνο “καθαρό” οριζόντιο swipe
+    if (Math.abs(dx) > 45 && Math.abs(dy) < 35) {
+      stepLightbox(dx < 0 ? 1 : -1);
+    }
+    tStartX = 0; tStartY = 0;
+  }, { passive: true });
 }
 
-/* Click thumbnails */
-document.querySelectorAll(".gallery__item").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const src = btn.getAttribute("data-src");
-    if (src) openLightbox(src);
-  });
+// Keyboard: Esc, ArrowLeft, ArrowRight
+document.addEventListener("keydown", (e) => {
+  if (!lightbox || !lightbox.classList.contains("is-open")) return;
+
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowLeft") stepLightbox(-1);
+  if (e.key === "ArrowRight") stepLightbox(1);
 });
 
-/* "Φωτογραφίες" button scrolls to that gallery */
-document.querySelectorAll(".js-open-gallery").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const key = btn.getAttribute("data-gallery");
-    const gallery = document.querySelector(`.gallery[data-gallery="${key}"]`);
-    if (gallery) gallery.scrollIntoView({ behavior: "smooth", block: "center" });
-  });
+/* Triggers: thumbnails / carousel slides (οτιδήποτε έχει data-src) */
+document.querySelectorAll('[data-src]').forEach(el => {
+  el.addEventListener("click", () => openLightboxFromEl(el));
 });
+
+
 
 /* ACTIVE NAV LINK (adds/removes .is-active) */
 (() => {

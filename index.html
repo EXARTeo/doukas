@@ -51,11 +51,11 @@
     <section class="hero" data-nav-theme="light">
       <div class="hero__grid" aria-hidden="true">
         <figure class="hero__tile hero__tile-t">
-          <img src="assets/wp/05.jpg" alt="Doukas' first room" loading="eager" />
+          <img src="assets/wp/07.jpg" alt="Doukas' first room" loading="eager" />
         </figure>
 
         <figure class="hero__tile hero__tile-b">
-          <img src="assets/wp/06.jpg" alt="Doukas' second room" loading="eager" />
+          <img src="assets/wp/05.jpg" alt="Doukas' second room" loading="eager" />
         </figure>
       </div>
 
@@ -77,8 +77,29 @@
           <!-- Apartment 1 -->
           <article class="card reveal">
             <div class="card__media">
-              <img src="assets/apt1/01.jpg" alt="DOUKAS 1 — φωτογραφία 1" loading="lazy" />
+              <div class="carousel" data-carousel="apt1">
+                <div class="carousel__track" tabindex="0" aria-label="Φωτογραφίες DOUKAS 1">
+                  <button type="button" class="carousel__slide js-lightbox" data-src="assets/apt1/01.jpg" aria-label="Άνοιγμα φωτογραφίας 1">
+                    <img src="assets/apt1/01.jpg" alt="DOUKAS 1 — φωτογραφία 1" loading="lazy" />
+                  </button>
+                  <button type="button" class="carousel__slide js-lightbox" data-src="assets/apt1/02.jpg" aria-label="Άνοιγμα φωτογραφίας 2">
+                    <img src="assets/apt1/02.jpg" alt="DOUKAS 1 — φωτογραφία 2" loading="lazy" />
+                  </button>
+                  <button type="button" class="carousel__slide js-lightbox" data-src="assets/apt1/03.jpg" aria-label="Άνοιγμα φωτογραφίας 3">
+                    <img src="assets/apt1/03.jpg" alt="DOUKAS 1 — φωτογραφία 3" loading="lazy" />
+                  </button>
+                  <button type="button" class="carousel__slide js-lightbox" data-src="assets/apt1/04.jpg" aria-label="Άνοιγμα φωτογραφίας 4">
+                    <img src="assets/apt1/04.jpg" alt="DOUKAS 1 — φωτογραφία 4" loading="lazy" />
+                  </button>
+                </div>
+
+                <button type="button" class="carousel__btn carousel__btn--prev" aria-label="Προηγούμενη φωτογραφία">‹</button>
+                <button type="button" class="carousel__btn carousel__btn--next" aria-label="Επόμενη φωτογραφία">›</button>
+
+                <div class="carousel__dots" aria-label="Επιλογή φωτογραφίας"></div>
+              </div>
             </div>
+
 
             <div class="card__body">
               <div class="card__top">
@@ -87,39 +108,44 @@
               </div>
 
               <ul class="bullets">
-                <!-- άλλαξε/σβήσε ό,τι δεν ισχύει -->
-                <li>Κουζίνα με βασικό εξοπλισμό</li>
+                <li>Κουζίνα</li>
                 <li>Air condition & TV</li>
                 <li>Μπαλκόνι</li>
               </ul>
 
               <div class="card__actions">
                 <a class="btn btn--solid" href="tel:+306976878433">Κλήση</a>
-                <button class="btn btn--ghost js-open-gallery" data-gallery="apt1">Φωτογραφίες</button>
               </div>
 
-              <div class="gallery" data-gallery="apt1">
-                <button class="gallery__item" data-src="assets/apt1/01.jpg" aria-label="Άνοιγμα φωτογραφίας 1">
-                  <img src="assets/apt1/01.jpg" alt="" loading="lazy">
-                </button>
-                <button class="gallery__item" data-src="assets/apt1/02.jpg" aria-label="Άνοιγμα φωτογραφίας 2">
-                  <img src="assets/apt1/02.jpg" alt="" loading="lazy">
-                </button>
-                <button class="gallery__item" data-src="assets/apt1/03.jpg" aria-label="Άνοιγμα φωτογραφίας 3">
-                  <img src="assets/apt1/03.jpg" alt="" loading="lazy">
-                </button>
-                <button class="gallery__item" data-src="assets/apt1/04.jpg" aria-label="Άνοιγμα φωτογραφίας 4">
-                  <img src="assets/apt1/04.jpg" alt="" loading="lazy">
-                </button>
-              </div>
             </div>
           </article>
 
           <!-- Apartment 2 -->
           <article class="card reveal">
             <div class="card__media">
-              <img src="assets/apt2/01.jpg" alt="DOUKAS 2 — φωτογραφία 1" loading="lazy" />
+              <div class="carousel" data-carousel="apt2">
+                <div class="carousel__track" tabindex="0" aria-label="Φωτογραφίες DOUKAS 2">
+                  <button type="button" class="carousel__slide js-lightbox" data-src="assets/apt2/01.jpg" aria-label="Άνοιγμα φωτογραφίας 1">
+                    <img src="assets/apt2/01.jpg" alt="DOUKAS 2 — φωτογραφία 1" loading="lazy" />
+                  </button>
+                  <button type="button" class="carousel__slide js-lightbox" data-src="assets/apt2/02.jpg" aria-label="Άνοιγμα φωτογραφίας 2">
+                    <img src="assets/apt2/02.jpg" alt="DOUKAS 2 — φωτογραφία 2" loading="lazy" />
+                  </button>
+                  <button type="button" class="carousel__slide js-lightbox" data-src="assets/apt2/03.jpg" aria-label="Άνοιγμα φωτογραφίας 3">
+                    <img src="assets/apt2/03.jpg" alt="DOUKAS 2 — φωτογραφία 3" loading="lazy" />
+                  </button>
+                  <button type="button" class="carousel__slide js-lightbox" data-src="assets/apt2/04.jpg" aria-label="Άνοιγμα φωτογραφίας 4">
+                    <img src="assets/apt2/04.jpg" alt="DOUKAS 2 — φωτογραφία 4" loading="lazy" />
+                  </button>
+                </div>
+
+                <button type="button" class="carousel__btn carousel__btn--prev" aria-label="Προηγούμενη φωτογραφία">‹</button>
+                <button type="button" class="carousel__btn carousel__btn--next" aria-label="Επόμενη φωτογραφία">›</button>
+
+                <div class="carousel__dots" aria-label="Επιλογή φωτογραφίας"></div>
+              </div>
             </div>
+
 
             <div class="card__body">
               <div class="card__top">
@@ -128,32 +154,14 @@
               </div>
 
               <ul class="bullets">
-                <!-- άλλαξε/σβήσε ό,τι δεν ισχύει -->
-                <li>Κουζίνα με πλήρη εξοπλισμό</li>
+                <li>Κουζίνα</li>
                 <li>Air condition</li>
                 <li>Μπαλκόνι</li>
               </ul>
 
               <div class="card__actions">
                 <a class="btn btn--solid" href="tel:+306976878433">Κλήση</a>
-                <button class="btn btn--ghost js-open-gallery" data-gallery="apt2">Φωτογραφίες</button>
               </div>
-
-              <div class="gallery" data-gallery="apt2">
-                <button class="gallery__item" data-src="assets/apt2/01.jpg" aria-label="Άνοιγμα φωτογραφίας 1">
-                  <img src="assets/apt2/01.jpg" alt="" loading="lazy">
-                </button>
-                <button class="gallery__item" data-src="assets/apt2/02.jpg" aria-label="Άνοιγμα φωτογραφίας 2">
-                  <img src="assets/apt2/02.jpg" alt="" loading="lazy">
-                </button>
-                <button class="gallery__item" data-src="assets/apt2/03.jpg" aria-label="Άνοιγμα φωτογραφίας 3">
-                  <img src="assets/apt2/03.jpg" alt="" loading="lazy">
-                </button>
-                <button class="gallery__item" data-src="assets/apt2/04.jpg" aria-label="Άνοιγμα φωτογραφίας 4">
-                  <img src="assets/apt2/04.jpg" alt="" loading="lazy">
-                </button>
-              </div>
-            </div>
           </article>
         </div>
 
@@ -164,6 +172,17 @@
         </div>
       </div>
     </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <button class="lightbox__close" id="lightboxClose" aria-label="Κλείσιμο">×</button>
+
+      <button type="button" class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Προηγούμενη φωτογραφία">‹</button>
+      <button type="button" class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Επόμενη φωτογραφία">›</button>
+
+      <img class="lightbox__img" id="lightboxImg" alt="Μεγέθυνση φωτογραφίας" />
+    </div>
+
 
     <!-- AMENITIES -->
     <section class="section section--alt" id="amenities" data-nav-theme="dark">
@@ -253,29 +272,54 @@
             <h3>Ώρες</h3>
             <p class="muted">Καθημερινά</p>
             <p class="muted">09:00 – 21:00</p>
-            <p class="muted" style="margin-top:14px;">(Άλλαξε το αν θες)</p>
+            <p class="muted" style="margin-top:14px;">(Πολιτική Κρατήσεων)</p>
           </div>
         </div>
       </div>
     </section>
 
     <footer class="footer" data-nav-theme="dark">
-      <div class="container footer__inner">
-        <p>© <span id="year"></span> DOUKAS Apartments</p>
-        <div class="footer__links">
-          <a href="#apartments">Διαμερίσματα</a>
-          <a href="#location">Τοποθεσία</a>
-          <a href="tel:+306976878433">Κλήση</a>
+      <div class="container">
+        <div class="footer__grid">
+          <div class="footer__col">
+            <a href="#top" class="footer__brand" aria-label="Πίσω στην αρχή">DOUKAS</a>
+            <p class="footer__desc">
+              Δύο άνετα διαμερίσματα στο λιμάνι των Συβότων, ιδανική βάση για θάλασσα, βόλτες και χαλάρωση.
+            </p>
+          </div>
+
+          <div class="footer__col">
+            <h4 class="footer__title">Γρήγορα links</h4>
+            <ul class="footer__list">
+              <li><a href="#apartments">Διαμερίσματα</a></li>
+              <li><a href="#amenities">Παροχές</a></li>
+              <li><a href="#location">Τοποθεσία</a></li>
+              <li><a href="#contact">Επικοινωνία</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__col">
+            <h4 class="footer__title">Επικοινωνία</h4>
+            <ul class="footer__list">
+              <li><a href="tel:+306976878433">697 687 8433</a></li>
+              <li><a href="https://maps.app.goo.gl/PEQWPL52uwh16XWh8" target="_blank" rel="noopener">Άνοιγμα στο Google Maps</a></li>
+              <li class="footer__meta">Σύβοτα, Θεσπρωτία (GR)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer__bottom">
+          <p>© <span id="year"></span> DOUKAS Apartments. Όλα τα δικαιώματα διατηρούνται.</p>
+          <div class="footer__mini">
+            <a href="#top">Πάνω</a>
+            <span aria-hidden="true">•</span>
+            <a href="#contact">Κρατήσεις</a>
+          </div>
         </div>
       </div>
     </footer>
-  </main>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox__close" id="lightboxClose" aria-label="Κλείσιμο">×</button>
-    <img class="lightbox__img" id="lightboxImg" alt="Μεγέθυνση φωτογραφίας" />
-  </div>
+  </main>
 
   <script src="main.js"></script>
   <script>
