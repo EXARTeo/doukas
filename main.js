@@ -14,6 +14,135 @@ revealEls.forEach(el => revealObserver.observe(el));
 
 /* LIGHTBOX */
 
+/* CAROUSEL (arrows + dots + keyboard) */
+(() => {
+  const carousels = document.querySelectorAll(".carousel");
+  if (!carousels.length) return;
+
+  carousels.forEach((carousel) => {
+    const track = carousel.querySelector(".carousel__track");
+    const slides = Array.from(carousel.querySelectorAll(".carousel__slide"));
+    const prevBtn = carousel.querySelector(".carousel__btn--prev");
+    const nextBtn = carousel.querySelector(".carousel__btn--next");
+    const dotsWrap = carousel.querySelector(".carousel__dots");
+
+    if (!track || slides.length === 0) return;
+
+    let current = 0;
+
+    const getStep = () => track.clientWidth || track.getBoundingClientRect().width || 0;
+
+    const scrollToIndex = (idx, instant = false) => {
+      const step = getStep();
+      if (!step) return;
+
+      current = Math.max(0, Math.min(idx, slides.length - 1));
+      const left = current * step;
+
+      try {
+        track.scrollTo({ left, behavior: instant ? "auto" : "smooth" });
+      } catch {
+        track.scrollLeft = left;
+      }
+      updateUI();
+    };
+
+    const updateUI = () => {
+      if (dotsWrap) {
+        const dots = dotsWrap.querySelectorAll(".carousel__dot");
+        dots.forEach((d, i) => d.classList.toggle("is-active", i === current));
+      }
+
+      // (optional) disable states at ends
+      if (prevBtn) prevBtn.disabled = current === 0;
+      if (nextBtn) nextBtn.disabled = current === slides.length - 1;
+    };
+
+    // Build dots
+    if (dotsWrap) {
+      dotsWrap.innerHTML = "";
+      slides.forEach((_, i) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "carousel__dot" + (i === 0 ? " is-active" : "");
+        dot.setAttribute("aria-label", `Εικόνα ${i + 1}`);
+        dot.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          scrollToIndex(i);
+        });
+        dotsWrap.appendChild(dot);
+      });
+    }
+
+    // Buttons
+    if (prevBtn) {
+      prevBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollToIndex(current - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollToIndex(current + 1);
+      });
+    }
+
+    // Sync current index on manual scroll (drag/swipe)
+    let raf = 0;
+    const syncFromScroll = () => {
+      const step = getStep();
+      if (!step) return;
+      const idx = Math.round(track.scrollLeft / step);
+      const clamped = Math.max(0, Math.min(idx, slides.length - 1));
+      if (clamped !== current) {
+        current = clamped;
+        updateUI();
+      }
+    };
+
+    track.addEventListener(
+      "scroll",
+      () => {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(syncFromScroll);
+      },
+      { passive: true }
+    );
+
+    // Keyboard on focused track
+    track.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        scrollToIndex(current - 1);
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        scrollToIndex(current + 1);
+      }
+    });
+
+    // Keep alignment on resize
+    window.addEventListener(
+      "resize",
+      () => scrollToIndex(current, true),
+      { passive: true }
+    );
+
+    // Initial state
+    requestAnimationFrame(() => {
+      syncFromScroll();
+      updateUI();
+    });
+  });
+})();
+
+
+
 /* LIGHTBOX (prev/next + swipe + keyboard) */
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
@@ -63,7 +192,7 @@ function openLightboxFromEl(el){
   if (!src) return;
 
   // Σετάρει “σετ” εικόνων από το κοντινότερο container (carousel ή gallery)
-  const container = el.closest('[data-carousel], [data-gallery]') || document;
+  const container = el.closest('[data-carousel]') || document;
   const items = Array
     .from(container.querySelectorAll('[data-src]'))
     .filter(n => n.getAttribute("data-src"));
@@ -131,10 +260,9 @@ document.querySelectorAll('[data-src]').forEach(el => {
   const nav = document.getElementById("nav");
   if (!nav) return;
 
-  // Πιάνουμε links από desktop nav + (αν υπάρχει) mobile nav
+  // Πιάνουμε links από το sticky nav
   const allLinks = [
     ...document.querySelectorAll('#nav a[href^="#"]'),
-    ...document.querySelectorAll('#mobileNav a[href^="#"]'),
   ];
 
   // κρατάμε μόνο anchors τύπου #section
